@@ -8,6 +8,7 @@ const App = () => {
   const [title, updateTitle] = useState('');
   const [fulltext, updateFulltext] = useState([]);
   const [mode, updateMode] = useState(false);
+  const [error, updateError] = useState('');
   useEffect(() => {
     fetch('/api', {
       headers: { 'Content-Type': 'application/json' },
@@ -26,13 +27,19 @@ const App = () => {
         return data.json();
       })
       .then(data => {
-        updateTitle(data.title);
-        updateFulltext(data.fulltext);
-      })
-      .catch(err => { });
+        if(data.title){
+          updateTitle(data.title);
+          updateFulltext(data.fulltext);
+        } else {
+          updateError('Invalid input.');
+        }
+      });
   }
 
   const saveHandler = (title, fulltext) => {
+    if (title.length === 0){
+      updateError('Title cannot be empty.');
+    } else {
     fetch('/api', {
       method: "POST",
       body: JSON.stringify({
@@ -49,9 +56,11 @@ const App = () => {
             return data.json();
           })
           .then(data => {
+            updateError('');
             updateList(data);
           });
       });
+    };
   };
 
   const viewHandler = title => {
@@ -79,11 +88,11 @@ const App = () => {
     updateFulltext(e.target.value);
   }
 
-  const deleteHandler = title => {
+  const deleteHandler = titleDelete => {
     fetch('/api', {
       method: "DELETE",
       body: JSON.stringify({
-        title: title,
+        title: titleDelete,
       }),
       headers: { 'Content-Type': 'application/json' },
     })
@@ -96,8 +105,11 @@ const App = () => {
           })
           .then(data => {
             updateList(data);
+            if (titleDelete === title){
+              updateTitle('');
+              updateFulltext([]);
+            }
           });
-
       });
   }
 
@@ -112,6 +124,7 @@ const App = () => {
     })}
     <TextBox title={title} 
     fulltext={fulltext} 
+    error={error}
     fetchHandler={fetchHandler} 
     saveHandler={saveHandler} 
     editHandler={editHandler} 

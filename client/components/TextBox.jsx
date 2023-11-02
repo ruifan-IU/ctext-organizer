@@ -1,29 +1,35 @@
 import React, { useEffect, useState } from "react";
 
-const TextBox = ({ title, fulltext, fetchHandler, saveHandler, editHandler, mode, onTitleChange, onFulltextChange}) => {
+const TextBox = ({ title, fulltext, error, fetchHandler, saveHandler, editHandler, mode, onTitleChange, onFulltextChange}) => {
   const [input, updateInput] = useState('');
   const onInputChange = (e) => {
     updateInput(e.target.value);
-  }
-
+  };
 
   if(mode) {
   return (
     <div>
-    <div>
+      <div>
       <input type='text' onChange={onInputChange}></input>
       <button onClick={() => {
         return fetchHandler(input);
         }}>Fetch</button>
+        </div>
+        <div>{error}</div>
+        <div>
       <input type='text' value={title} onChange={onTitleChange}/>
+      </div>
+      <div>
       <textarea value={fulltext} rows={30} cols={100} onChange={onFulltextChange}/>
+      </div>
+      <div>
       <button onClick={editHandler}>Edit/View</button>
       <button onClick={
         () => {
          return saveHandler(title, fulltext);
         }
       }>Save</button>
-    </div>
+      </div>
     </div>
   );
 };
@@ -34,6 +40,7 @@ return (
     <button onClick={() => {
       return fetchHandler(input);
       }}>Fetch</button>
+       <div color={'red'}>{error}</div>
     <h2>{title}</h2>
     <p>{fulltext}</p>
     <button onClick={editHandler}>Edit/View</button>
@@ -46,5 +53,4 @@ return (
   </div>
 )
 };
-
 export default TextBox;
