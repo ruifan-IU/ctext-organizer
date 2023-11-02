@@ -63,14 +63,20 @@ const App = () => {
         updateTitle(data.title);
         updateFulltext(data.fulltext);
       })
-  }
+  };
 
   const editHandler = () => {
     updateMode(!mode);
   }
+
   const onTitleChange = (e) => {
     console.log(e.target.value)
     updateTitle(e.target.value);
+  };
+
+  const onFulltextChange = (e) => {
+    console.log(e.target.value)
+    updateFulltext(e.target.value);
   }
 
   const deleteHandler = title => {
@@ -110,6 +116,7 @@ const App = () => {
     saveHandler={saveHandler} 
     editHandler={editHandler} 
     onTitleChange={onTitleChange}
+    onFulltextChange={onFulltextChange}
     mode={mode} />
   </div>
 

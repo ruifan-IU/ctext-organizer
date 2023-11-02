@@ -1,14 +1,22 @@
 const models = require('../models/ctextModels');
 const textController = {};
 
-textController.createTitle = (req, res, next) => {
-  console.log('createTitle');
+textController.saveTitle = (req, res, next) => {
   const { title, fulltext } = req.body;
-  models.Text.create({ fulltext: fulltext, title: title})
-    .then (text => {
-      res.locals.text = text;
-      return next();
-    });
+  models.Text.findOne({ title })
+  .then(data => {
+    if (!data) {
+      models.Text.create({ fulltext: fulltext, title: title})
+      .then (text => {
+        res.locals.text = text;
+        return next();
+      });
+    };
+    models.Text.findOneAndUpdate({ title }, { fulltext})
+    .then(text => {
+
+    })
+  })
 };
 
 textController.getAll = (req, res, next) => {

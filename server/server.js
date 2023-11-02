@@ -13,7 +13,7 @@ const textController = require('./controllers/textController');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.post('/api', textController.createTitle, (req, res) => {
+app.post('/api', textController.saveTitle, (req, res) => {
   return res.status(200).json(res.locals.text);
 });
 
