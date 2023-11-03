@@ -1,6 +1,7 @@
 import React from 'react';
 import { createRoot } from "react-dom/client";
 import App from './components/App.jsx';
+import './css/styles.scss'; 
 
 // uncomment so that webpack can bundle styles
 //import styles from './scss/application.scss';
