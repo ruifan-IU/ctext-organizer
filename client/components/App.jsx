@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import TextBox from './TextBox.jsx';
 import Title from './Title.jsx';
 import { Container } from 'react-bootstrap';
